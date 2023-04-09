@@ -1,5 +1,5 @@
 {
-	"name": "project-blitzer",
+	"name": "sveltekit-auth-starter",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -27,6 +27,7 @@
 		"puppeteer": "^19.8.5",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
+		"sveltekit-autoimport": "^1.7.0",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
 		"unocss": "^0.50.8",
