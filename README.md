@@ -1,13 +1,11 @@
 # SvleteKit Vite Typescript SupaBase Unocss Primsa Starter
 
-This template should get you up and running with a web app that allows users to login either via email, magic link or Oauth provider
-
 - ⚡️ SvleteKit, Vite, pnpm, esbuild
 - 💯 Typescript
 - 👷 Eslint + Prettier
 - 🎨 [UnoCSS](https://github.com/unocss/unocss) - Tailwind/Windi CSS + CSS icons, webfonts + more
 - 🏠 [Supabase](https://supabase.com/) DB via Prisma
-- 🤵 [Supabase](https://supabase.com/) for Auth
+- 🤵 [Supabase](https://supabase.com/) for Auth (magic link, email, oauth)
 
 ## Getting Started
 
@@ -45,6 +43,48 @@ PUBLIC_SUPABASE_ANON_KEY="{prject api key - found on project page}"
 - Update Prisma schema and run migragte
 - Run dev task
 
+### Auth
+
+Read the [Supabase Sveltekit docs](https://supabase.com/docs/guides/auth/auth-helpers/sveltekit) for more information on setup, protecting API routes, protecting actions and general info.
+
+#### Protected routes
+
+This repo doesn't come with any protected routes but it is setup to protect new routes that start with `dashboard`:
+
+```
+hooks.server.ts
+...
+	// protect requests to all routes that start with /dashboard
+	if (event.url.pathname.startsWith('/dashboard')) {
+		const session = await event.locals.getSession();
+		if (!session) {
+			// the user is not signed in
+			throw redirect(303, '/');
+		}
+	}
+...
+```
+
+#### OAuth
+
+This repo is setup to use Email, Google, Discord and Github as auth providers.
+
+By default only the google button will show, to enable Discord or Github uncomment the buttons in `src\routes\login\+page.svelte`
+
+To remove an auth provider completly remove it from the array in `src\routes\login\+page.server.ts`
+
+```
+const OAUTH_PROVIDERS = ['google', 'discord', 'github'];
+```
+
+For a full walkthrough on how to setup OAuth providers see this [tutorial](https://www.youtube.com/watch?v=KfezTtt2GsA)
+
+### Reading List
+
+[Supabase Sveltekit Auth](https://supabase.com/docs/guides/auth/auth-helpers/sveltekit)
+
+[UnoCSS](https://github.com/unocss/unocss)
+
 ### Add Extra Functionality
 
 [Unit Testing](https://testing-library.com/docs/svelte-testing-library/setup/) - Vitest, Jest
@@ -56,9 +96,9 @@ PUBLIC_SUPABASE_ANON_KEY="{prject api key - found on project page}"
 ## Credits
 
 [SvelteKit Auth Tutorial](https://www.youtube.com/watch?v=KfezTtt2GsA)
+[SvelteKit OAuth Tutorial](https://www.youtube.com/watch?v=KfezTtt2GsA)
 [Vitesse](https://github.com/antfu/vitesse)
 
 ## TODO
 
 - Generate DB definitions for end2end typescript with Supabase
--

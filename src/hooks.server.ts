@@ -21,8 +21,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return session;
 	};
 
-	// protect requests to all routes that start with /protected-routes
-	if (event.url.pathname.startsWith('/editor')) {
+	// protect requests to all routes that start with /dashboard
+	if (event.url.pathname.startsWith('/dashboard')) {
 		const session = await event.locals.getSession();
 		if (!session) {
 			// the user is not signed in
